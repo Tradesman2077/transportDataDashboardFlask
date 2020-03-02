@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+<link rel="stylesheet" type="text/css" href="static/main.css">
+<div class="row">
+    <div class="col-sm-6">
+        <div>
+            <canvas id="myChart"></canvas>
+
+
+            <script>
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                    labels: {{ labels| tojson}},
+            responsive: true,
+            datasets: [{
+            label: 'Distance travelled by transport type',
+                data: {{ values| tojson}},
+                maintainAspectRatio: false,
+            backgroundColor: ['#2A283E',
+'#0E8D61',
+'#0AC679',
+'#F5EA43',
+'#E03F09']
+                }]
+            }
+        });
+    console.log({{values|tojson}});
+            </script>
+            <article style=" border: 1px solid lightgrey;  border-radius: 10px; padding : 2em;">
+                <h4>Distance by travel type</h4>
+                <p style="text-align:center;  ">
+                   
+                        This chart shows distance travelled by different modes of transport.
+                        Each type is given a different color and its distance travelled displayed on the chart.
+                    
+                </p>
+            </article>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div>
+            <canvas id="myChart2"></canvas>
+
+
+            <script>
+            var ctx = document.getElementById('myChart2').getContext('2d');
+            var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                    labels: {{ labels| tojson}},
+            responsive: true,
+            datasets: [{
+            label: 'Distance travelled by transport type',
+                data: {{ values| tojson}},
+                maintainAspectRatio: false,
+            backgroundColor: ['#0AC679']
+                }]
+            }
+        });
+    console.log({{values|tojson}});
+            </script>
+            <article style=" border: 1px solid lightgrey;  border-radius: 10px; padding : 2em;">
+                <h4>Distance by travel type</h4>
+                <p style="text-align:center;  ">
+            
+                        This chart shows distance travelled by different modes of transport.
+                        Each type is given a different color and its distance travelled displayed on the chart.
+            
+                </p>
+            </article>
+        </div>
+    </div>
+    
+<div class="row">
+    <div class="col-sm-12">
+        <div class="container">
+            <blockquote cite="According to 2019 data">
+                Since january 2019 we have seen a reduction in students driving or travelling by bus,
+                this will reduce our carbon footprint and make students healthier.
+            </blockquote>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <canvas id="myChart4"></canvas>
+
+
+        <script>
+            var ctx = document.getElementById('myChart4').getContext('2d');
+            var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                    labels: {{ labels| tojson}},
+            responsive: true,
+            datasets: [{
+            label: 'Distance travelled by transport type',
+                data: {{ values| tojson}},
+                maintainAspectRatio: false,
+            backgroundColor: ['#2A283E',
+'#0E8D61',
+'#0AC679',
+'#F5EA43',
+'#E03F09']
+                }]
+            }
+        });
+    console.log({{values|tojson}});
+        </script>
+        <article style=" border: 1px solid lightgrey;  border-radius: 10px; padding : 2em;">
+            <h4>Distance by travel type</h4>
+            <p style="text-align:center;  ">
+              
+                    This chart shows distance travelled by different modes of transport.
+                    Each type is given a different color and its distance travelled displayed on the chart.
+            
+            </p>
+        </article>
+    </div>
+    <div class="col-sm-6">
+        <canvas id="myChart5"></canvas>
+
+
+        <script>
+            var ctx = document.getElementById('myChart5').getContext('2d');
+            var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                    labels: {{ labels| tojson}},
+            responsive: true,
+            datasets: [{
+            label: 'Distance travelled by transport type',
+                data: {{ values| tojson}},
+                maintainAspectRatio: false,
+            backgroundColor: ['#2A283E',
+'#0E8D61',
+'#0AC679',
+'#F5EA43',
+'#E03F09']
+                }]
+            }
+        });
+    console.log({{values|tojson}});
+        </script>
+        <article style=" border: 1px solid lightgrey;  border-radius: 10px; padding : 2em;">
+            <h4>Distance by travel type</h4>
+            <p style="text-align:center;  ">
+              
+                    This chart shows distance travelled by different modes of transport.
+                    Each type is given a different color and its distance travelled displayed on the chart.
+         
+            </p>
+        </article>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="container">
+            <blockquote cite="According to 2019 data">
+                Since january 2019 we have seen a reduction in students driving or travelling by bus,
+                this will reduce our carbon footprint and make students healthier.
+            </blockquote>
+        </div>
+    </div>
+</div>
+   
+
+    {% endblock %}
+

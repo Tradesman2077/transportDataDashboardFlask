@@ -1,0 +1,38 @@
+blockquote:before {
+    content: '\201C';
+    position: absolute;
+    top: 0em;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: transparent;
+    width: 3rem;
+    height: 2rem;
+    font: 6em/1.08em 'PT Sans', sans-serif;
+    color: #666;
+    text-align: center;
+    padding: 2em;
+}
+
+blockquote:after {
+    content: "\2013 \2003" attr(cite);
+    display: block;
+    text-align: right;
+    font-size: 0.875em;
+    color: #E03F09;
+}
+.container {
+    background: whitesmoke;
+    width: 100%;
+    max-width: 480px;
+    min-width: 320px;
+    margin: 2em auto 0;
+    padding: 2em;
+}
+
+p {
+    margin-bottom: 1.5em;
+}
+
+p:last-child {
+    margin-bottom: 0;
+  }

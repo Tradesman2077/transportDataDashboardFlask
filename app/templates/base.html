@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+<head>
+
+    <link rel="stylesheet" type="text/css" href="static/main.css">
+
+    <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Spartan&display=swap" rel="stylesheet">
+</head>
+
+<body style="background-color: whitesmoke; ">
+    <header>
+        <nav class="navbar navbar-light " style="background-color:#2A283E; ">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#" style="color: whitesmoke; font-family: 'Spartan' ; font-size:30px">LTU Transport Dashboard.</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <section>
+        {% block content %}
+        {% endblock %}
+
+
+    </section>
+</body>
+    
+
+</html>
