@@ -1,6 +1,8 @@
 from app import app, mysql
-from .forms import LoginForm, RegistrationForm
-from flask import url_for, redirect, flash, render_template
+from flask import request
+from app.forms import LoginForm
+from app.forms import RegisterForm
+from flask import render_template, flash, redirect, url_for
 
 # ----------------------
 # APP ROUTES
@@ -10,8 +12,6 @@ conn = mysql.connect()
 
 # create a database cursor
 cursor = conn.cursor()
-
-
 
 def get_rows():
     """ gets query results from cursor as
@@ -44,31 +44,46 @@ def home():
         labels.append(key)
         values.append(value)
     values = [int("".join([str(y) for y in x])) for x in values]
-    print(values)
+    carbon_list = []
+
+    carbon_list.append(type_totals['car']*411)
+    carbon_list.append( type_totals['bus']*822)
+    carbon_list.append(type_totals['train']*14)
+    
+    print(carbon_list)
 
     return render_template('home.html', title='LTU Transport Dashboard', max=17000, values = values, labels= labels, colors = colors)
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()  
+    form = LoginForm()
     if form.validate_on_submit():
-        cursor.execute('SELECT email, password FROM user')
-        #cursor = db.profiles.find({"email": form.email.data, "password": form.password.data})
-        if cursor.rowcount >0:
-           flash('You have logged in', 'success')        
-           return render_template('home.html')
-        else:
-            flash('Log in unsuccessful please try again', 'danger')
-    return render_template('login.html', title='Login', form=form)
 
-@app.route("/register", methods=['GET', 'POST'])
-def register():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        #new_profile = {'username' : form.username.data, 'email' : form.email.data, 'password': form.password.data}
-        #db.profiles.insert_one(new_profile)
-        cursor.execute('INSERT INTO user (username, email, password) VALUES (%s, %s, %s)', form.username.data, form.email.data, form.password.data )
-        flash(f'Account created for {form.username.data}!', 'success')
+        flash('Login requested for user {}, remember_me={}'.format(
+            form.username.data, form.remember_me.data))
         return redirect(url_for('home'))
+    return render_template('login.html',  title='Sign In', form=form)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()
+    if request.method == 'POST' and form.validate():
+        
+        # call the connection method
+        cursor, conn = connection()
+        # check if the user exist in the db
+        count = cursor.execute('select * from user where email=%s', form.email.data)  # prevent SqlInject
+
+        if count == 0:
+           # count 0 email
+           cursor.execute("INSERT INTO user(username, email, password) VALUES (%s, %s, %s)", (form.username.data, form.email.data, form.password.data))
+           conn.commit()
+           cursor.close()
+           flash('Thanks for registering')
+           #return redirect(url_for('/login'))
+        else:
+           # the email exists
+           flash('User with this email address exists, please login')
+        
     return render_template('register.html', title='Register', form=form)
+
