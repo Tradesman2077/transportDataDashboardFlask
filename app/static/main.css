@@ -36,3 +36,20 @@ p {
 p:last-child {
     margin-bottom: 0;
   }
+
+.flex-container {
+    display: flex;
+    
+    flex-wrap: wrap;
+    align-content: stretch;
+    width: 220px;
+    height: 215px;
+    float: left;
+}
+.box {
+
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    float: left;
+}

@@ -2,14 +2,17 @@ from app import app, mysql
 from flask import request
 from app.forms import LoginForm
 from app.forms import RegisterForm
+from app.forms import JourneyInfoForm
 from flask import render_template, flash, redirect, url_for
+from flask_wtf.csrf import CSRFError
+from app import csrf
 
 # ----------------------
 # APP ROUTES
 # ----------------------
+
 # connect to database
 conn = mysql.connect()
-
 # create a database cursor
 cursor = conn.cursor()
 
@@ -23,7 +26,7 @@ def get_rows():
 @app.route('/')
 def home():
     """
-        Landing page for application
+        Landing page for application 
     """
     cursor.execute("SELECT id, journey_type,distance FROM journey")
     journeys = get_rows()
@@ -35,7 +38,6 @@ def home():
     "#ABCDEF", "#DDDDDD", "#ABCABC", "#4169E1",
     "#C71585", "#FF4500", "#FEDCBA", "#46BFBD"]
     for journey in journeys:
-
         if journey['journey_type'] not in type_totals.values():
             type_totals [journey['journey_type']] = [journey['distance']]
         else:
@@ -44,46 +46,67 @@ def home():
         labels.append(key)
         values.append(value)
     values = [int("".join([str(y) for y in x])) for x in values]
-    carbon_list = []
+    carbon_values = [822, 0, 411, 14, 0]
+    carbon_list = [a*b for a,b in zip(carbon_values,values)]
+    return render_template('home.html', title='LTU Transport Dashboard', max=17000, values = values, labels= labels, carbon = carbon_list, colors = colors)
 
-    carbon_list.append(type_totals['car']*411)
-    carbon_list.append( type_totals['bus']*822)
-    carbon_list.append(type_totals['train']*14)
-    
-    print(carbon_list)
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
-    return render_template('home.html', title='LTU Transport Dashboard', max=17000, values = values, labels= labels, colors = colors)
+@app.route('/journey', methods=['GET', 'POST'])
+def journey():
+    form = JourneyInfoForm()
+    dropdown_list = ['walk', 'bus', 'car', 'bike', 'train']
+
+
+    return render_template('journey.html', dropdown_list=dropdown_list, form=form)
+
+
+@app.route('/home_after_login', methods=['GET', 'POST'])
+def home_after_login():
+    return render_template('home_after_login.html')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
+        if request.method == 'POST' and form.validate():
+            user = form.username.data
+            cursor.execute('select * from user where username=%s', form.username.data)
+            user_details = get_rows()
+            print(user_details)
+            if user_details[0]['username'] == user:
+                flash('Welcome back')
+                return redirect(url_for('home_after_login'))
+            else:
+                # no user found
+                flash('User not found')
+                return render_template('login.html',  title='Sign In', form=form)
 
-        flash('Login requested for user {}, remember_me={}'.format(
-            form.username.data, form.remember_me.data))
-        return redirect(url_for('home'))
+
     return render_template('login.html',  title='Sign In', form=form)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
     if request.method == 'POST' and form.validate():
-        
-        # call the connection method
-        cursor, conn = connection()
         # check if the user exist in the db
         count = cursor.execute('select * from user where email=%s', form.email.data)  # prevent SqlInject
-
         if count == 0:
            # count 0 email
            cursor.execute("INSERT INTO user(username, email, password) VALUES (%s, %s, %s)", (form.username.data, form.email.data, form.password.data))
-           conn.commit()
-           cursor.close()
            flash('Thanks for registering')
-           #return redirect(url_for('/login'))
         else:
            # the email exists
-           flash('User with this email address exists, please login')
-        
+           flash('User with this email address exists, please login')       
     return render_template('register.html', title='Register', form=form)
 
+@app.errorhandler(CSRFError)
+def handle_csrf_error(e):
+    return render_template('csrf_error.html', reason=e.description), 400
+
+def check_csrf():
+    if not is_oauth(request):
+        csrf.protect();

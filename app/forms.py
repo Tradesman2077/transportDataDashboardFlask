@@ -18,3 +18,6 @@ class RegisterForm(FlaskForm):
     confirm = PasswordField('Repeat Password')
     submit = SubmitField('Register')
 
+class JourneyInfoForm(FlaskForm):
+    username = StringField('Username', validators = [Length(min=4, max=25)]) 
+    submit = SubmitField('Submit')

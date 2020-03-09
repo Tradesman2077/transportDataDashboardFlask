@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" type="text/css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 <link rel="stylesheet" type="text/css" href="static/main.css">
-
+<div class="row">
+    <div class="col-lg-6" style="padding:20px;">
+        Welcome to the LTU transport dashboard.
+    </div>
+    <div class="col-lg-6" style="padding:20px;">
+     
+    </div>
+</div>
 <div class="row">
     <div class="col-sm-6">
         <div>
@@ -28,7 +36,7 @@
         });
     console.log({{values|tojson}});
             </script>
-            <article style=" border: 1px solid lightgrey;  border-radius: 10px;">
+            <article style=" border: 1px solid lightgrey;  border-radius: 10px; text-align:center;">
                 <h4><a href="/">Distance by travel type</a></h4>
                 <p style="text-align:center;  ">
                    
@@ -50,7 +58,7 @@
                     labels: {{ labels| tojson}},
             responsive: true,
             datasets: [{
-            label: 'Distance travelled by transport type',
+            label: 'Carbon output over the past year',
                 data: {{ values| tojson}},
                 maintainAspectRatio: false,
             backgroundColor: ['#0AC679']
@@ -59,12 +67,11 @@
         });
     console.log({{values|tojson}});
             </script>
-            <article style=" border: 1px solid lightgrey;  border-radius: 10px; ">
-                <h4><a href="/">Distance by travel type</a></h4>
-                <p style="text-align:center;  ">
+            <article style=" border: 1px solid lightgrey;  border-radius: 10px; text-align:center;">
+                <h4><a href="/">Carbon output over the past year</a></h4>
+                <p >
             
-                        This chart shows distance travelled by different modes of transport.
-                        Each type is given a different color and its distance travelled displayed on the chart.
+                        This chart shows the transport carbon output over the past 12 months.
        
                 </p>
             </article>
@@ -83,8 +90,8 @@
                     labels: {{ labels| tojson}},
             responsive: true,
             datasets: [{
-            label: 'Distance travelled by transport type',
-                data: {{ values| tojson}},
+            label: 'Carbon output by transport type',
+                data: {{ carbon| tojson}},
                 maintainAspectRatio: false,
             backgroundColor: ['#2A283E',
 '#0E8D61',
@@ -96,12 +103,11 @@
         });
     console.log({{values|tojson}});
         </script>
-        <article style=" border: 1px solid lightgrey;  border-radius: 10px;">
-            <h4><a href="/">Distance by travel type</a></h4>
+        <article style=" border: 1px solid lightgrey;  border-radius: 10px;text-align:center;">
+            <h4><a href="/">Carbon output by travel type (grams)</a></h4>
             <p style="text-align:center;  ">
               
-                    This chart shows distance travelled by different modes of transport.
-                    Each type is given a different color and its distance travelled displayed on the chart.
+                    This chart shows the total carbon output by each mode of transport to and from the university based on averages of carbon in grams per mile.
             
             </p>
         </article>
@@ -131,19 +137,18 @@
         });
     console.log({{values|tojson}});
         </script>
-        <article style=" border: 1px solid lightgrey;  border-radius: 10px; ">
-            <h4><a href="/">Distance by travel type</a></h4>
+        <article style=" border: 1px solid lightgrey;  border-radius: 10px;text-align:center; ">
+            <h4><a href="/">Number of journeys per by transport type</a></h4>
             <p style="text-align:center;  ">
               
-                    This chart shows distance travelled by different modes of transport.
-                    Each type is given a different color and its distance travelled displayed on the chart.
+                    This chart shows the number of journeys to and from the university travelled by different modes of transport.
          
             </p>
         </article>
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-6">
         <div class="container">
             <blockquote cite="Leeds Trinity 2020">
                 The University recognises that it has a responsibility to the environment beyond legal and regulatory requirements.
@@ -152,10 +157,7 @@
             </blockquote>
         </div>
     </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-6">
         <div class="container">
             <blockquote cite="Leeds Trinity 2020">
                 "Leeds Trinity provides a free shuttle bus as part of our travel plan and operates a car share scheme to encourage people to avoid or lessen the impact of vehicles on site.
@@ -165,6 +167,8 @@
         </div>
     </div>
 </div>
+
+
    
 
     {% endblock %}

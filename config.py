@@ -1,6 +1,6 @@
 import os
-
-class Config(object): SECRET_KEY =os.environ.get('SECRET_KEY') or 'you-will-never-guess'
+SECRET_KEY = b'\xca|\xd96\xc33|L\xf7P\x978\xc0\x05\x9e\x980\xd4\xf9\xd9C?\xea\x96'
+class Config(object): SECRET_KEY =os.environ.get('SECRET_KEY') 
 
 # edit and use this config if you are running app in docker
 class DockerDevConfig(object):

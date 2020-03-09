@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en" dir="ltr">
 <head>
@@ -30,8 +30,8 @@
                     <li><a href="/contact">Contact</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="/journey"><span class="glyphicon glyphicon-user"></span> Enter your journey details</a></li>
+
                 </ul>
             </div>
         </nav>
@@ -49,11 +49,29 @@
         {% endwith %}
 
         {% block content %}
-        {% endblock %}
+        <form action="" method="post" novalidate>
+            {{ form.csrf_token }}
+            <P>
+                <select class="form-control" id="rating" name="rating">
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3" selected>3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select>
+            </P>
+            <p>{{ form.submit() }}</p>
+
+
+            {% endblock %}
 
 
     </section>
 </body>
-    
+
 
 </html>
+
+
+
+
