@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<body bgcolor="#96fdac">
+    <center><h1>Survey</h1></center>
+    <br>
+    <center><form>
+    Enter your full name:<input type="text" name="name" value="Name">   
+    <br>
+    <br>
+    <br>
+    Female: <input type="radio" name="sex">
+    Male: <input type="radio" name="sex">
+    other: <input type="radio" name="sex">
+    <br>
+    <br>
+    <br>
+    age:
+    <select name="age">
+        <option>18-25</option>
+        <option>over 25</option>
+    </select>
+    <br>
+    <br>
+    <br>
+Select which type of transport you took today:
+<br>
+Bus <input type="checkbox" name="fave" value="Bus">
+Car <input type="checkbox" name="fave" value="Car">
+Train <input type="checkbox" name="fave" value="Train">
+other <input type="checkbox" name="fave" value="other">
+<br>
+<br>
+<br>
+Type in how far you have travelled today in (Km):
+<br>
+<textarea name="comment" rows="1" cols="15">
+</textarea>
+<br>
+<br>
+<br>
+Type down the date you travelled below:
+<br>
+<textarea name="comment" rows="1" cols="15">
+</textarea>
+<br>
+<br>
+<input type="submit" value="Submit">
+
+
+</form></center>
+
+
+
+
+</body>
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

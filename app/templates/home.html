@@ -12,7 +12,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-lg-6">
         <div>
             <canvas id="myChart"></canvas>
             <script>
@@ -47,15 +47,17 @@
             </article>
         </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-lg-6">
         <div>
             <canvas id="myChart2"></canvas>
             <script>
             var ctx = document.getElementById('myChart2').getContext('2d');
-            var myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                    labels: {{ labels| tojson}},
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels : [{% for item in months %}
+             "{{item}}",
+            {% endfor %}],
             responsive: true,
             datasets: [{
             label: 'Carbon output over the past year',

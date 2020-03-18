@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, RadioField, SelectField, TextAreaField, TextField, IntegerField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, RadioField, SelectField, TextAreaField, TextField, IntegerField, DateField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
 
+TYPE_CHOICES = [('1', 'walk'), ('2', 'bus')]
 
 
 class LoginForm(FlaskForm):
@@ -18,6 +19,13 @@ class RegisterForm(FlaskForm):
     confirm = PasswordField('Repeat Password')
     submit = SubmitField('Register')
 
+    
+
+    
 class JourneyInfoForm(FlaskForm):
-    username = StringField('Username', validators = [Length(min=4, max=25)]) 
-    submit = SubmitField('Submit')
+
+     distance = IntegerField('Distance', validators = [DataRequired()] )
+     username = StringField('Username', validators = [Length(min=4, max=25)])
+     journey_date = DateField('Date',format='%Y-%m-%d', validators =[DataRequired()])
+     submit = SubmitField('Submit')
+     type =RadioField('Journey type', choices=[('bus','bus'),('walk','walk'), ('train','train'),('car','car'),('cycle', 'cycle')])
